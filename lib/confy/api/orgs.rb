@@ -1,0 +1,49 @@
+module Confy
+
+  module Api
+
+    # Organizations are owned by users and only (s)he can add/remove teams and projects for that organization. A default organization will be created for every user.
+    class Orgs
+
+      def initialize(client)
+        @client = client
+      end
+
+      # List all organizations the authenticated user is a member of.
+      #
+      # '/orgs' GET
+      def list(options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs", body, options)
+      end
+
+      # Get an organization the user has access to.
+      #
+      # '/orgs/:org' GET
+      #
+      # org - Name of the organization
+      def retrieve(org, options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs/#{org}", body, options)
+      end
+
+      # Update an organization the user is owner of.
+      #
+      # '/orgs/:org' PATCH
+      #
+      # org - Name of the organization
+      # email - Billing email of the organization
+      def update(org, email, options = {})
+        body = options.fetch(:body, {})
+        body[:email] = email
+
+        @client.patch("/orgs/#{org}", body, options)
+      end
+
+    end
+
+  end
+
+end
