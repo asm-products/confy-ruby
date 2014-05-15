@@ -4,7 +4,9 @@ require "json"
 require "confy/api/user"
 require "confy/api/orgs"
 require "confy/api/teams"
+require "confy/api/members"
 require "confy/api/projects"
+require "confy/api/access"
 require "confy/api/envs"
 require "confy/api/config"
 
@@ -33,11 +35,27 @@ module Confy
       Confy::Api::Teams.new(org, @http_client)
     end
 
+    # Teams contain a list of users. The Authenticated user should be the owner of the organization.
+    #
+    # org - Name of the organization
+    # team - Name of the team
+    def members(org, team)
+      Confy::Api::Members.new(org, team, @http_client)
+    end
+
     # An organization can contain any number of projects.
     #
     # org - Name of the organization
     def projects(org)
       Confy::Api::Projects.new(org, @http_client)
+    end
+
+    # List of teams who has access to the project. Default team __Owners__ will have access to every project. Authenticated user should be the owner of the organization for the below endpoints.
+    #
+    # org - Name of the organization
+    # project - Name of the project
+    def access(org, project)
+      Confy::Api::Access.new(org, project, @http_client)
     end
 
     # Every project has a default environment named Production. Each environment has one configuration document which can have many keys and values.
