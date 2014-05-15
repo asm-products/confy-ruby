@@ -9,7 +9,7 @@ module Confy
         @client = client
       end
 
-      # Get the authenticated user's info.
+      # Get the authenticated user's profile.
       #
       # '/user' GET
       def retrieve(options = {})

@@ -17,7 +17,7 @@ module Confy
 
         @options = {
           :base => "https://api.confy.io",
-          :user_agent => "alpaca/0.2.0 (https://github.com/pksunkara/alpaca)"
+          :user_agent => "alpaca/0.2.1 (https://github.com/pksunkara/alpaca)"
         }
 
         @options.update(options)
