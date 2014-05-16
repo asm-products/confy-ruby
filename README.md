@@ -21,7 +21,21 @@ Works with [ 1.8.6 / 1.8.7 / 1.9.1 / 1.9.2 / 1.9.3 / 2.0.0 / 2.1.0 / 2.1.1 ]
 ```ruby
 require "confyio"
 
-# Then we instantiate a client (as shown below)
+# Retrieve the config using URL
+config = Confy::Config.new('https://user:pass@api.confy.io/orgs/company/project/app/envs/production')
+
+# or using options hash
+config = Confy::Config.new({
+  :host => 'https://api.confy.io', :user => 'user', :pass => 'pass',
+  :org => 'company', :project => 'app', :env => 'production'
+})
+
+# => { 'port': 6000, 'db': { 'pass': 'sun' } }
+
+config['port'] # => 6000
+config['db']['pass'] # => 'sun'
+
+# Or you could instantiate a client to work with other api (as shown below)
 ```
 
 ### Build a client
