@@ -2,8 +2,7 @@ module Confy
 
   class Config
 
-    def self.new(url = {})
-
+    def self.load(url = {})
       if url.is_a?(String)
         regex = Regexp.new('(https?:\/\/)(.*):(.*)@(.*)\/orgs\/([a-z0-9]*)\/projects\/([a-z0-9]*)\/envs\/([a-z0-9]*)\/config', true)
         matches = regex.match(url)
@@ -21,6 +20,29 @@ module Confy
       client.config(url[:org], url[:project], url[:env]).retrieve().body
     end
 
+    def self.env(url = {})
+      self.path(self.load(url))
+    end
+
+    def self.path(config, str = '')
+      type = config.class
+
+      if type == Array
+        config.each_with_index do |value, key|
+          self.path(value, "#{str}_#{key}")
+        end
+      elsif type == Hash
+        config.each do |key, value|
+          self.path(value, "#{str}_#{key.upcase}")
+        end
+      elsif type == TrueClass
+        ENV[str.slice(1, str.length)] = '1'
+      elsif type == FalseClass
+        ENV[str.slice(1, str.length)] = '0'
+      else
+        ENV[str.slice(1, str.length)] = config.to_s
+      end
+    end
   end
 
 end

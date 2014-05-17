@@ -22,10 +22,10 @@ Works with [ 1.8.6 / 1.8.7 / 1.9.1 / 1.9.2 / 1.9.3 / 2.0.0 / 2.1.0 / 2.1.1 ]
 require "confyio"
 
 # Retrieve the config using URL
-config = Confy::Config.new('https://user:pass@api.confy.io/orgs/company/project/app/envs/production')
+config = Confy::Config.load('https://user:pass@api.confy.io/orgs/company/project/app/envs/production')
 
 # or using options hash
-config = Confy::Config.new({
+config = Confy::Config.load({
   :host => 'https://api.confy.io', :user => 'user', :pass => 'pass',
   :org => 'company', :project => 'app', :env => 'production'
 })
@@ -36,6 +36,25 @@ config['port'] # => 6000
 config['db']['pass'] # => 'sun'
 
 # Or you could instantiate a client to work with other api (as shown below)
+```
+
+You can also load the config directly into environment variables by doing as shown below. All the values will be stored in the key formed by concatenizing their keys with underscores.
+
+```ruby
+# Using URL
+Confy::Config.env("https://user:pass@api.confy.io/orgs/company/project/app/envs/production")
+
+# or using options hash
+Confy::Config.env({
+  'host': 'https://api.confy.io', 'user': 'user', 'pass': 'pass',
+  'org': 'company', 'project': 'app', 'env': 'production'
+});
+
+# ['port']
+ENV['PORT'] # => 6000
+
+# ['db']['pass']
+ENV['DB_PASS'] # => 'sun'
 ```
 
 ### Build a client
