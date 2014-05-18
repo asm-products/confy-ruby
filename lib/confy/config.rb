@@ -7,6 +7,8 @@ module Confy
         regex = Regexp.new('(https?:\/\/)(.*):(.*)@(.*)\/orgs\/([a-z0-9]*)\/projects\/([a-z0-9]*)\/envs\/([a-z0-9]*)\/config', true)
         matches = regex.match(url)
 
+        raise 'Invalid url' if matches.nil?
+
         url = {
           :host => matches[1] + matches[4], :user => matches[2], :pass => matches[3],
           :org => matches[5], :project => matches[6], :env => matches[7]
