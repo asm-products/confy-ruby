@@ -27,11 +27,11 @@ module Confy
 
       # Update the configuration document for the given environment of the project. We will patch the document recursively.
       #
-      # '/orgs/:org/projects/:project/envs/:env/config' POST
+      # '/orgs/:org/projects/:project/envs/:env/config' PATCH
       #
       # body - Configuration to update
       def update(body, options = {})
-        @client.post("/orgs/#{@org}/projects/#{@project}/envs/#{@env}/config", body, options)
+        @client.patch("/orgs/#{@org}/projects/#{@project}/envs/#{@env}/config", body, options)
       end
 
     end
