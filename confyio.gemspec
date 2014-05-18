@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name        = "confyio"
-  gem.version     = "1.2.0"
+  gem.version     = "1.3.0"
   gem.description = "Official Confy API library client for ruby"
   gem.summary     = "Official Confy API library client for ruby"
 
