@@ -29,8 +29,11 @@ module Confy
       #
       # '/orgs/:org/projects/:project/envs/:env/config' PATCH
       #
-      # body - Configuration to update
-      def update(body, options = {})
+      # config - Configuration to update
+      def update(config, options = {})
+        body = options.fetch(:body, {})
+        body[:config] = config
+
         @client.patch("/orgs/#{@org}/projects/#{@project}/envs/#{@env}/config", body, options)
       end
 
