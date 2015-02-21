@@ -11,7 +11,11 @@ module Confy
 
         # Response body is in JSON
         if type and type.include?("json")
-          body = JSON.parse body
+          begin
+            body = JSON.parse body
+          rescue JSON::ParserError
+            return body
+          end
         end
 
         return body
