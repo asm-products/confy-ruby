@@ -2,7 +2,7 @@ module Confy
 
   module Api
 
-    # List of teams who has access to the project. Default team __Owners__ will have access to every project. Authenticated user should be the owner of the organization for the below endpoints.
+    # List of teams whic have access to the project. Default team __Owners__ will have access to every project. Authenticated user should be the owner of the organization for the below endpoints.
     #
     # org - Name of the organization
     # project - Name of the project
@@ -14,7 +14,16 @@ module Confy
         @client = client
       end
 
-      # Give the team access to the given project. The __team__ in the request needs to be a string.
+      # Retrieve a list of teams which have access to the given project. Authenticated user should be a member of the team.
+      #
+      # '/orgs/:org/projects/:project/access' GET
+      def list(options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs/#{@org}/projects/#{@project}/access", body, options)
+      end
+
+      # Give the team access to the given project. The __team__ in the request needs to be a string and should be the name of a valid team. Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/projects/:project/access' POST
       #
@@ -26,7 +35,7 @@ module Confy
         @client.post("/orgs/#{@org}/projects/#{@project}/access", body, options)
       end
 
-      # Remove project access for the given team. The __team__ in the request needs to be a string. Can't delete default team's access.
+      # Remove project access for the given team. The __team__ in the request needs to be a string and should be the name of a valid team. Can't delete default team's access. Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/projects/:project/access' DELETE
       #

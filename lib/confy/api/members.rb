@@ -14,7 +14,16 @@ module Confy
         @client = client
       end
 
-      # Add the user to the given team. The __user__ in the request needs to be a string.
+      # List all the members in the given team. Authenticated user should be a member of the team or the owner of the org.
+      #
+      # '/orgs/:org/teams/:team/member' GET
+      def list(options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs/#{@org}/teams/#{@team}/member", body, options)
+      end
+
+      # Add the user to the given team. The __user__ in the request needs to be a string and be the username of a valid user.  The Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/teams/:team/member' POST
       #
@@ -26,7 +35,7 @@ module Confy
         @client.post("/orgs/#{@org}/teams/#{@team}/member", body, options)
       end
 
-      # Remove users from the given team. The __user__ in the request needs to be a string. Cannot delete the default member in a team.
+      # Remove users from the given team. The __user__ in the request needs to be a string and be the username of a valid user. Cannot delete the default member in a team.  The Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/teams/:team/member' DELETE
       #

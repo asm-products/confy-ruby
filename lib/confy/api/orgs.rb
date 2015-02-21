@@ -32,7 +32,7 @@ module Confy
         @client.post("/orgs", body, options)
       end
 
-      # Get an organization the user has access to.
+      # Get the given organization if the authenticated user is a member.
       #
       # '/orgs/:org' GET
       #
@@ -43,7 +43,7 @@ module Confy
         @client.get("/orgs/#{org}", body, options)
       end
 
-      # Update an organization the user is owner of.
+      # Update the given organization if the authenticated user is the owner. __Email__ is the only thing which can be updated.
       #
       # '/orgs/:org' PATCH
       #

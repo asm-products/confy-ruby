@@ -2,7 +2,7 @@ module Confy
 
   module Api
 
-    # Every project has a default environment named Production. Each environment has one configuration document which can have many keys and values.
+    # Every project has a default environment named Production. Each environment has __one__ configuration document which can have many keys and values.
     #
     # org - Name of the organization
     # project - Name of the project
@@ -14,7 +14,7 @@ module Confy
         @client = client
       end
 
-      # List all the environmens of the project which can be seen by the authenticated user.
+      # List all the environmens of the project. The authenticated user should have access to the project.
       #
       # '/orgs/:org/projects/:project/envs' GET
       def list(options = {})
@@ -23,7 +23,7 @@ module Confy
         @client.get("/orgs/#{@org}/projects/#{@project}/envs", body, options)
       end
 
-      # Create an environment for the given project. Authenticated user should have access to the project.
+      # Create an environment. The authenticated user should have access to the project.
       #
       # '/orgs/:org/projects/:project/envs' POST
       #
@@ -37,7 +37,7 @@ module Confy
         @client.post("/orgs/#{@org}/projects/#{@project}/envs", body, options)
       end
 
-      # Get an environment of the project the user has access to.
+      # Get the given environment in the given project. The authenticated user should have access to the project.
       #
       # '/orgs/:org/projects/:project/envs/:env' GET
       #
@@ -48,7 +48,7 @@ module Confy
         @client.get("/orgs/#{@org}/projects/#{@project}/envs/#{env}", body, options)
       end
 
-      # Update an environment. Authenticated user should have access to the project.
+      # Update the given environment. __Description__ is the only thing which can be updated. Authenticated user should have access to the project.
       #
       # '/orgs/:org/projects/:project/envs/:env' PATCH
       #
@@ -61,7 +61,7 @@ module Confy
         @client.patch("/orgs/#{@org}/projects/#{@project}/envs/#{env}", body, options)
       end
 
-      # Delete the given environment of the project. Authenticated user should have access to the project. Cannot delete the default environment.
+      # Delete the given environment. Authenticated user should have access to the project. Cannot delete the default environment.
       #
       # '/orgs/:org/projects/:project/envs/:env' DELETE
       #

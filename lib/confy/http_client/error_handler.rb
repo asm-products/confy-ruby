@@ -27,7 +27,7 @@ module Confy
             end
 
             # If JSON, a particular field is taken and used
-            if type.include?("json") and body.is_a?(Hash)
+            if type and type.include?("json") and body.is_a?(Hash)
               if body.has_key?("message")
                 message = body["message"]
               else

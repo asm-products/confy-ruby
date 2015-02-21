@@ -28,7 +28,7 @@ module Confy
       Confy::Api::Orgs.new(@http_client)
     end
 
-    # Every organization will have a default team named Owners. Owner of the organization will be a default member for every team.
+    # Every organization will have a default team named __Owners__. Owner of the organization will be a default member for every team.
     #
     # org - Name of the organization
     def teams(org)
@@ -50,7 +50,7 @@ module Confy
       Confy::Api::Projects.new(org, @http_client)
     end
 
-    # List of teams who has access to the project. Default team __Owners__ will have access to every project. Authenticated user should be the owner of the organization for the below endpoints.
+    # List of teams whic have access to the project. Default team __Owners__ will have access to every project. Authenticated user should be the owner of the organization for the below endpoints.
     #
     # org - Name of the organization
     # project - Name of the project
@@ -58,7 +58,7 @@ module Confy
       Confy::Api::Access.new(org, project, @http_client)
     end
 
-    # Every project has a default environment named Production. Each environment has one configuration document which can have many keys and values.
+    # Every project has a default environment named Production. Each environment has __one__ configuration document which can have many keys and values.
     #
     # org - Name of the organization
     # project - Name of the project

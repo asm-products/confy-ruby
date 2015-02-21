@@ -18,14 +18,12 @@ module Confy
         @client.get("/user", body, options)
       end
 
-      # Update the authenticated user's profile
+      # Update the authenticated user's profile. Should use basic authentication.
       #
       # '/user' PATCH
       #
-      # email - Profile email of the user
-      def update(email, options = {})
+      def update(options = {})
         body = options.fetch(:body, {})
-        body[:email] = email
 
         @client.patch("/user", body, options)
       end

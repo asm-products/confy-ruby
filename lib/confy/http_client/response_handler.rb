@@ -10,7 +10,7 @@ module Confy
         body = response.body
 
         # Response body is in JSON
-        if type.include?("json")
+        if type and type.include?("json")
           body = JSON.parse body
         end
 

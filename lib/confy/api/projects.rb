@@ -12,7 +12,7 @@ module Confy
         @client = client
       end
 
-      # List all the projects of the organization which can be seen by the authenticated user.
+      # List all the projects of the given organization which can be accessed by the authenticated user.
       #
       # '/orgs/:org/projects' GET
       def list(options = {})
@@ -21,7 +21,7 @@ module Confy
         @client.get("/orgs/#{@org}/projects", body, options)
       end
 
-      # Create a project for the given organization. Authenticated user should be the owner of the organization.
+      # Create a project if the authenticated user is the owner of the given organization. Only the __owners__ team will be able to see the project initially.
       #
       # '/orgs/:org/projects' POST
       #
@@ -35,7 +35,7 @@ module Confy
         @client.post("/orgs/#{@org}/projects", body, options)
       end
 
-      # Get a project the user has access to.
+      # Get the given project in the given organization. Works only if the authenticated user has access to the project.
       #
       # '/orgs/:org/projects/:project' GET
       #
@@ -46,7 +46,7 @@ module Confy
         @client.get("/orgs/#{@org}/projects/#{project}", body, options)
       end
 
-      # Update a project. Authenticated user should be the owner of the organization.
+      # Update the given project. __Description__ is the only thing which can be updated. Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/projects/:project' PATCH
       #
@@ -59,7 +59,7 @@ module Confy
         @client.patch("/orgs/#{@org}/projects/#{project}", body, options)
       end
 
-      # Delete the given project. Cannot delete the default project in the organization. Authenticated user should be the owner of the organization.
+      # Delete the given project. Authenticated user should be the owner of the organization.
       #
       # '/orgs/:org/projects/:project' DELETE
       #
