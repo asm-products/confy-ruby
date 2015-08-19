@@ -561,7 +561,7 @@ response = config.update({
 ```
 
 ## Contributors
-Here is a list of [Contributors](https://github.com/asm-products/confy-ruby/contributors)
+Here is a list of [Contributors](https://github.com/confyio/confy-ruby/contributors)
 
 ### TODO
 
@@ -569,7 +569,7 @@ Here is a list of [Contributors](https://github.com/asm-products/confy-ruby/cont
 BSD
 
 ## Bug Reports
-Report [here](https://github.com/asm-products/confy-ruby/issues).
+Report [here](https://github.com/confyio/confy-ruby/issues).
 
 ## Contact
 Pavan Kumar Sunkara (pavan.sss1991@gmail.com)

@@ -46,7 +46,7 @@ module Confy
 
       # Basic Authorization with username and password
       def http_password(env)
-        code = Base64.encode64 "#{@auth[:username]}:#{@auth[:password]}"
+        code = Base64.strict_encode64 "#{@auth[:username]}:#{@auth[:password]}"
 
         env[:request_headers]["Authorization"] = "Basic #{code}"
 
