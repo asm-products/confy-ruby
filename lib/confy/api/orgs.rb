@@ -18,20 +18,6 @@ module Confy
         @client.get("/orgs", body, options)
       end
 
-      # Create an organization with a name and the email for billing.
-      #
-      # '/orgs' POST
-      #
-      # name - Name of the organization
-      # email - Billing email of the organization
-      def create(name, email, options = {})
-        body = options.fetch(:body, {})
-        body[:name] = name
-        body[:email] = email
-
-        @client.post("/orgs", body, options)
-      end
-
       # Get the given organization if the authenticated user is a member.
       #
       # '/orgs/:org' GET

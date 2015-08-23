@@ -70,6 +70,17 @@ module Confy
         @client.delete("/orgs/#{@org}/teams/#{team}", body, options)
       end
 
+      # Retrieve the list of projects the given team has access to. Authenticated user should be a member of the team.
+      #
+      # '/orgs/:org/teams/:team/projects' GET
+      #
+      # team - Name of the team
+      def projects(team, options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs/#{@org}/teams/#{team}/projects", body, options)
+      end
+
     end
 
   end

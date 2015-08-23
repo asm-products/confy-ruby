@@ -16,7 +16,7 @@ module Confy
         @client = client
       end
 
-      # Get an environment config of the project.
+      # Get an environment configuration
       #
       # '/orgs/:org/projects/:project/envs/:env/config' GET
       def retrieve(options = {})
@@ -35,6 +35,15 @@ module Confy
         body[:config] = config
 
         @client.patch("/orgs/#{@org}/projects/#{@project}/envs/#{@env}/config", body, options)
+      end
+
+      # List the last 10 versions of the environment configuration
+      #
+      # '/orgs/:org/projects/:project/envs/:env/versions' GET
+      def versions(options = {})
+        body = options.fetch(:query, {})
+
+        @client.get("/orgs/#{@org}/projects/#{@project}/envs/#{@env}/versions", body, options)
       end
 
     end
