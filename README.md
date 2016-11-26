@@ -14,7 +14,7 @@ $ gem install confyio
 
 #### Versions
 
-Works with [ 1.8.6 / 1.8.7 / 1.9.1 / 1.9.2 / 1.9.3 / 2.0.0 / 2.1.0 / 2.1.1 ]
+Works with [ 1.8.x / 1.9.x / 2.0.x / 2.1.x / 2.2.x ]
 
 ## Usage
 
@@ -30,7 +30,7 @@ require "confyio"
 # => { 'port': 6000, 'db': { 'pass': 'sun' } }
 
 # Using URL
-Confy::Config.env("https://user:pass@api.confy.io/orgs/company/project/app/envs/production")
+Confy::Config.env('https://user:pass@api.confy.io/orgs/company/project/app/envs/production/config')
 
 # or using options hash
 Confy::Config.env({
@@ -48,7 +48,7 @@ ENV['DB_PASS'] # => 'sun'
 
 ```ruby
 # Retrieve the config using URL
-config = Confy::Config.load('https://user:pass@api.confy.io/orgs/company/project/app/envs/production')
+config = Confy::Config.load('https://user:pass@api.confy.io/orgs/company/project/app/envs/production/config')
 
 # or using options hash
 config = Confy::Config.load({
