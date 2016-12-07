@@ -27,8 +27,6 @@ module Confy
           if !flag
             raise StandardError.new "Unable to calculate authorization method. Please check"
           end
-        else
-          raise StandardError.new "Server requires authentication to proceed further. Please check"
         end
 
         @app.call(env)

@@ -10,24 +10,43 @@ module Confy
     def self.load(url = {})
       if url.is_a?(String)
         name_regex = '([a-z0-9][a-z0-9-]*[a-z0-9])'
-        path_regex = 'orgs\\/' + name_regex + '\\/projects\\/' + name_regex + '\\/envs\\/' + name_regex
-        url_regex = Regexp.new('(https?:\\/\\/)(.*):(.*)@(.*)\\/(' + path_regex + '|heroku)\\/config', true)
+        token_regex = '([a-f0-9]{40})'
+        path_regex = 'orgs\\/' + name_regex + '(\\/projects\\/' + name_regex + '\\/envs\\/' + name_regex + '\\/config|config\\/' + token_regex + ')'
+        url_regex = Regexp.new('(https?:\\/\\/)((.*):(.*)@)?(.*)\\/(' + path_regex + '|heroku\\/config)', true)
 
         matches = url_regex.match(url)
 
         raise 'Invalid url' if matches.nil?
 
         url = {
-          :host => matches[1] + matches[4], :path => "/#{matches[5]}/config",
-          :user => matches[2], :pass => matches[3]
+          :host => matches[1] + matches[5],
+          :user => matches[3], :pass => matches[4],
+          :org => matches[7], :project => matches[9], :env => matches[10],
+          :token => matches[11],
+          :heroku => (matches[6] == 'heroku/config')
         }
       end
 
       raise 'Invalid url' if !url.is_a?(Hash)
 
-      client = Confy::Client.new({
-        :username => url[:user], :password => url[:pass]
-      }, { :base => url[:host] })
+      if url[:user] and url[:pass] and url[:heroku]
+        url[:path] = '/heroku/config'
+      elsif url[:token] and url[:org]
+        url[:path] = '/orgs/' + url[:org] + '/config/' + url[:token]
+      elsif url[:user] and url[:pass] and url[:org] and url[:project] and url[:env]:
+        url[:path] = '/orgs/' + url[:org] + '/projects/' + url[:project] + '/envs/' + url[:env]
+      else
+        raise 'Invalid configuration to generate URL'
+      end
+
+      auth = {}
+
+      if url[:user] and url[:pass]
+        auth[:username] = url[:user]
+        auth[:password] = url[:pass]
+      end
+
+      client = Confy::Client.new(auth, { :base => url[:host] })
 
       body = client.instance_variable_get(:@http_client).get(url[:path]).body
 
