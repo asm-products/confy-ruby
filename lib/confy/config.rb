@@ -7,16 +7,16 @@ module Confy
 
   class Config
 
-    def self.load(url = {})
-      if url.is_a?(String)
+    def self.match(url)
+       if url.is_a?(String)
         name_regex = '([a-z0-9][a-z0-9-]*[a-z0-9])'
         token_regex = '([a-f0-9]{40})'
-        path_regex = 'orgs\\/' + name_regex + '(\\/projects\\/' + name_regex + '\\/envs\\/' + name_regex + '\\/config|config\\/' + token_regex + ')'
+        path_regex = 'orgs\\/' + name_regex + '(\\/projects\\/' + name_regex + '\\/envs\\/' + name_regex + '\\/config|\\/config\\/' + token_regex + ')'
         url_regex = Regexp.new('(https?:\\/\\/)((.*):(.*)@)?(.*)\\/(' + path_regex + '|heroku\\/config)', true)
 
         matches = url_regex.match(url)
 
-        raise 'Invalid url' if matches.nil?
+        raise 'Invalid URL' if matches.nil?
 
         url = {
           :host => matches[1] + matches[5],
@@ -27,17 +27,23 @@ module Confy
         }
       end
 
-      raise 'Invalid url' if !url.is_a?(Hash)
+      raise 'Invalid URL' if !url.is_a?(Hash)
 
-      if url[:user] and url[:pass] and url[:heroku]
+      if url[:host] and url[:user] and url[:pass] and url[:heroku]
         url[:path] = '/heroku/config'
-      elsif url[:token] and url[:org]
+      elsif url[:host] and url[:token] and url[:org]
         url[:path] = '/orgs/' + url[:org] + '/config/' + url[:token]
-      elsif url[:user] and url[:pass] and url[:org] and url[:project] and url[:env]:
-        url[:path] = '/orgs/' + url[:org] + '/projects/' + url[:project] + '/envs/' + url[:env]
+      elsif url[:host] and url[:user] and url[:pass] and url[:org] and url[:project] and url[:env]
+        url[:path] = '/orgs/' + url[:org] + '/projects/' + url[:project] + '/envs/' + url[:env] + '/config'
       else
-        raise 'Invalid configuration to generate URL'
+        raise 'Invalid URL'
       end
+
+      url
+    end
+
+    def self.load(url = {})
+      url = self.match(url)
 
       auth = {}
 

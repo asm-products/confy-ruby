@@ -61,7 +61,7 @@ endpoint = {
   'env': 'production', # Name of the stage
 };
 
-endpoint = 'https://user:pass@api.confy.io/orgs/orgname/project/projectname/envs/envname/config';
+endpoint = 'https://user:pass@api.confy.io/orgs/orgname/projects/projectname/envs/envname/config';
 
 # Access Token URl
 endpoint = {
@@ -92,7 +92,7 @@ ENV['DB_PASS'] # => 'sun'
 
 #### Environment Variables
 
-You can load it directly into `process.env` with the key formed by concatenizing the path keys with underscores.
+You can load it directly into `ENV` with the key formed by concatenizing the path keys with underscores.
 
 ```ruby
 config = Confy::Config.load(endpoint)
@@ -100,6 +100,8 @@ config = Confy::Config.load(endpoint)
 config['port'] # => 6000
 config['db']['pass'] # => 'sun'
 ```
+
+## API Reference
 
 ### Build a client
 
