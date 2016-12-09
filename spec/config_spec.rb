@@ -116,13 +116,13 @@ RSpec.describe Confy::Config, '#match' do
   end
 
   context 'with bad url' do
-    it 'should return error' do
+    it 'should raise error' do
       expect { Confy::Config.match('http://api.confy.io/projects/config') }.to raise_error(RuntimeError, 'Invalid URL')
     end
   end
 
   context 'with empty object' do
-    it 'should return error' do
+    it 'should raise error' do
       expect { Confy::Config.match({ user: 'user', pass: 'pass', heroku: true }) }.to raise_error(RuntimeError, 'Invalid URL')
     end
   end
